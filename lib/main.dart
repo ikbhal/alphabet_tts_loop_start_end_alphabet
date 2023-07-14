@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_tts/flutter_tts.dart';
+import 'dart:math';
 
 void main() {
   runApp(MyApp());
@@ -24,13 +25,13 @@ class _AlphabetPlayerState extends State<AlphabetPlayer> {
   final TextEditingController endAlphabetController = TextEditingController();
   final TextEditingController repeatCountController = TextEditingController(text: '1');
   FlutterTts flutterTts = FlutterTts();
-  String lessonString = '';
+  String currentAlphabet = '';
   bool isPlaying = false;
 
   @override
   void initState() {
     super.initState();
-    // flutterTts = FlutterTts();
+    flutterTts = FlutterTts();
     flutterTts.setLanguage('en');
     flutterTts.setSpeechRate(0.4);
   }
@@ -50,7 +51,22 @@ class _AlphabetPlayerState extends State<AlphabetPlayer> {
     }
   }
 
-  void playLessonString() {
+  void playAlphabet(String alphabet) async {
+    // Set the current alphabet
+    setState(() {
+      currentAlphabet = alphabet;
+    });
+
+    // Speak the current alphabet
+    await speak(alphabet);
+
+    // Clear the current alphabet
+    setState(() {
+      currentAlphabet = '';
+    });
+  }
+
+  void playLessonString() async {
     final String startAlphabet = startAlphabetController.text.toUpperCase();
     final String endAlphabet = endAlphabetController.text.toUpperCase();
     final int repeatCount = int.parse(repeatCountController.text);
@@ -60,22 +76,30 @@ class _AlphabetPlayerState extends State<AlphabetPlayer> {
         isPlaying = true;
       });
 
-      String lesson = '';
+      final random = Random();
+
       for (int i = 0; i < repeatCount; i++) {
-        lesson += startAlphabet + ' ';
+        await playAlphabet(startAlphabet);
+
         for (int j = startAlphabet.codeUnitAt(0) + 1; j <= endAlphabet.codeUnitAt(0); j++) {
-          lesson += String.fromCharCode(j) + ' ';
+          final currentAlphabet = String.fromCharCode(j);
+          final color = Color.fromARGB(
+            255,
+            random.nextInt(256),
+            random.nextInt(256),
+            random.nextInt(256),
+          );
+
+          setState(() {
+            this.currentAlphabet = currentAlphabet;
+          });
+
+          await Future.delayed(Duration(milliseconds: 1000)); // Delay for 1 second
         }
       }
 
       setState(() {
-        lessonString = lesson;
-      });
-
-      speak(lessonString).then((_) {
-        setState(() {
-          isPlaying = false;
-        });
+        isPlaying = false;
       });
     }
   }
@@ -83,7 +107,6 @@ class _AlphabetPlayerState extends State<AlphabetPlayer> {
   @override
   void dispose() {
     stop();
-    // flutterTts = null;
     super.dispose();
   }
 
@@ -134,8 +157,8 @@ class _AlphabetPlayerState extends State<AlphabetPlayer> {
               ),
               SizedBox(height: 20.0),
               Text(
-                lessonString,
-                style: TextStyle(fontSize: 16.0),
+                currentAlphabet,
+                style: TextStyle(fontSize: 64.0, fontWeight: FontWeight.bold, color: Colors.primaries[Random().nextInt(Colors.primaries.length)]),
               ),
             ],
           ),
