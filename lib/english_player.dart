@@ -9,15 +9,13 @@ class EnglishAlphabetPlayer extends StatefulWidget {
 }
 
 class _EnglishAlphabetPlayerState extends State<EnglishAlphabetPlayer> {
-  final TextEditingController startAlphabetController =
-  TextEditingController(text:Alphabets.englishAlphabets.first);
-  final TextEditingController endAlphabetController =
-  TextEditingController(text:Alphabets.englishAlphabets.first);
   final TextEditingController repeatCountController =
-      TextEditingController(text: '1');
+  TextEditingController(text: '1');
   FlutterTts flutterTts = FlutterTts();
   String currentAlphabet = '';
   bool isPlaying = false;
+  String selectedStartAlphabet = Alphabets.englishAlphabets.first;
+  String selectedEndAlphabet = Alphabets.englishAlphabets.first;
 
   @override
   void initState() {
@@ -34,7 +32,7 @@ class _EnglishAlphabetPlayerState extends State<EnglishAlphabetPlayer> {
   }
 
   void stop() async {
-    if (mounted && isPlaying) {
+    if (isPlaying) {
       await flutterTts.stop();
       setState(() {
         isPlaying = false;
@@ -43,37 +41,29 @@ class _EnglishAlphabetPlayerState extends State<EnglishAlphabetPlayer> {
   }
 
   Future<bool> playAlphabet(String alphabet) async {
-    // Set the current alphabet
     setState(() {
       currentAlphabet = alphabet;
     });
-
-    // Speak the current alphabet
     await speak(alphabet);
-
     return true;
   }
 
   void playLessonString() async {
-    final String startAlphabet = startAlphabetController.text.toUpperCase();
-    final String endAlphabet = endAlphabetController.text.toUpperCase();
     final int repeatCount = int.parse(repeatCountController.text);
 
-    if (startAlphabet.isNotEmpty && endAlphabet.isNotEmpty && repeatCount > 0) {
+    if (repeatCount > 0) {
       setState(() {
         isPlaying = true;
       });
 
-      final random = Random();
-
       for (int i = 0; i < repeatCount && isPlaying; i++) {
-        for (int j = startAlphabet.codeUnitAt(0);
-            isPlaying && j <= endAlphabet.codeUnitAt(0);
-            j++) {
-          final currentAlphabet = String.fromCharCode(j);
+        final startIndex = Alphabets.englishAlphabets.indexOf(selectedStartAlphabet);
+        final endIndex = Alphabets.englishAlphabets.indexOf(selectedEndAlphabet);
+
+        for (int j = startIndex; j <= endIndex && isPlaying; j++) {
+          final currentAlphabet = Alphabets.englishAlphabets[j];
           await playAlphabet(currentAlphabet);
-          await Future.delayed(
-              Duration(milliseconds: 2000)); // Delay for 2 seconds
+          await Future.delayed(Duration(milliseconds: 2000)); // Delay for 2 seconds
         }
       }
 
@@ -101,17 +91,37 @@ class _EnglishAlphabetPlayerState extends State<EnglishAlphabetPlayer> {
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
-              TextField(
-                controller: startAlphabetController,
-                maxLength: 1,
+              DropdownButtonFormField<String>(
+                value: selectedStartAlphabet,
+                onChanged: (newValue) {
+                  setState(() {
+                    selectedStartAlphabet = newValue!;
+                  });
+                },
+                items: Alphabets.englishAlphabets.map((alphabet) {
+                  return DropdownMenuItem(
+                    value: alphabet,
+                    child: Text(alphabet),
+                  );
+                }).toList(),
                 decoration: InputDecoration(
                   labelText: 'Start Alphabet',
                 ),
               ),
               SizedBox(height: 10.0),
-              TextField(
-                controller: endAlphabetController,
-                maxLength: 1,
+              DropdownButtonFormField<String>(
+                value: selectedEndAlphabet,
+                onChanged: (newValue) {
+                  setState(() {
+                    selectedEndAlphabet = newValue!;
+                  });
+                },
+                items: Alphabets.englishAlphabets.map((alphabet) {
+                  return DropdownMenuItem(
+                    value: alphabet,
+                    child: Text(alphabet),
+                  );
+                }).toList(),
                 decoration: InputDecoration(
                   labelText: 'End Alphabet',
                 ),
@@ -125,14 +135,19 @@ class _EnglishAlphabetPlayerState extends State<EnglishAlphabetPlayer> {
                 ),
               ),
               SizedBox(height: 20.0),
-              ElevatedButton(
-                onPressed: isPlaying ? null : playLessonString,
-                child: Text('Speak'),
-              ),
-              SizedBox(height: 10.0),
-              ElevatedButton(
-                onPressed: stop,
-                child: Text('Stop'),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  ElevatedButton(
+                    onPressed: isPlaying ? null : playLessonString,
+                    child: Text('Speak'),
+                  ),
+                  SizedBox(width: 10.0),
+                  ElevatedButton(
+                    onPressed: stop,
+                    child: Text('Stop'),
+                  ),
+                ],
               ),
               SizedBox(height: 20.0),
               Text(
