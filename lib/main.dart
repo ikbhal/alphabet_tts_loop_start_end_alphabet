@@ -23,7 +23,7 @@ class _AlphabetPlayerState extends State<AlphabetPlayer> {
   final TextEditingController startAlphabetController = TextEditingController();
   final TextEditingController endAlphabetController = TextEditingController();
   final TextEditingController repeatCountController = TextEditingController(text: '1');
-  FlutterTts flutterTts;
+  final FlutterTts tts = FlutterTts();
   String lessonString = '';
   bool isPlaying = false;
 
