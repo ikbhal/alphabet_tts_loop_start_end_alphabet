@@ -23,14 +23,14 @@ class _AlphabetPlayerState extends State<AlphabetPlayer> {
   final TextEditingController startAlphabetController = TextEditingController();
   final TextEditingController endAlphabetController = TextEditingController();
   final TextEditingController repeatCountController = TextEditingController(text: '1');
-  final FlutterTts tts = FlutterTts();
+  FlutterTts flutterTts = FlutterTts();
   String lessonString = '';
   bool isPlaying = false;
 
   @override
   void initState() {
     super.initState();
-    flutterTts = FlutterTts();
+    // flutterTts = FlutterTts();
   }
 
   Future<void> speak(String text) async {
@@ -81,7 +81,7 @@ class _AlphabetPlayerState extends State<AlphabetPlayer> {
   @override
   void dispose() {
     stop();
-    flutterTts = null;
+    // flutterTts = null;
     super.dispose();
   }
 
