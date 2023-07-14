@@ -1,3 +1,4 @@
+import 'package:alphabet_text_to_speech/alphabets.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_tts/flutter_tts.dart';
 import 'dart:math';
@@ -8,8 +9,10 @@ class EnglishAlphabetPlayer extends StatefulWidget {
 }
 
 class _EnglishAlphabetPlayerState extends State<EnglishAlphabetPlayer> {
-  final TextEditingController startAlphabetController = TextEditingController();
-  final TextEditingController endAlphabetController = TextEditingController();
+  final TextEditingController startAlphabetController =
+  TextEditingController(text:Alphabets.englishAlphabets.first);
+  final TextEditingController endAlphabetController =
+  TextEditingController(text:Alphabets.englishAlphabets.first);
   final TextEditingController repeatCountController =
       TextEditingController(text: '1');
   FlutterTts flutterTts = FlutterTts();
