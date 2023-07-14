@@ -146,14 +146,19 @@ class _KannadaPlayerState extends State<KannadaPlayer> {
                 ),
               ),
               SizedBox(height: 20.0),
-              ElevatedButton(
-                onPressed: isPlaying ? null : playLessonString,
-                child: Text('Speak'),
-              ),
-              SizedBox(height: 10.0),
-              ElevatedButton(
-                onPressed: stop,
-                child: Text('Stop'),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  ElevatedButton(
+                    onPressed: isPlaying ? null : playLessonString,
+                    child: Text('Play'),
+                  ),
+                  SizedBox(width: 10.0),
+                  ElevatedButton(
+                    onPressed: stop,
+                    child: Text('Stop'),
+                  ),
+                ],
               ),
               SizedBox(height: 20.0),
               Text(

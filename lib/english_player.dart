@@ -140,7 +140,7 @@ class _EnglishAlphabetPlayerState extends State<EnglishAlphabetPlayer> {
                 children: [
                   ElevatedButton(
                     onPressed: isPlaying ? null : playLessonString,
-                    child: Text('Speak'),
+                    child: Text('Play'),
                   ),
                   SizedBox(width: 10.0),
                   ElevatedButton(

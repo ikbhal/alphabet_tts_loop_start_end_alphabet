@@ -147,7 +147,7 @@ class _HindiPlayerState extends State<HindiPlayer> {
                   children: [
                     ElevatedButton(
                       onPressed: isPlaying ? null : playHindiAlphabets,
-                      child: Text('Speak'),
+                      child: Text('Play'),
                     ),
                     SizedBox(width: 10.0),
                     ElevatedButton(

@@ -123,14 +123,19 @@ class _NumberPlayerState extends State<NumberPlayer> {
                 ),
               ),
               SizedBox(height: 20.0),
-              ElevatedButton(
-                onPressed: isPlaying ? null : playNumberSequence,
-                child: Text('Play'),
-              ),
-              SizedBox(height: 10.0),
-              ElevatedButton(
-                onPressed: stop,
-                child: Text('Stop'),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  ElevatedButton(
+                    onPressed: isPlaying ? null : playNumberSequence,
+                    child: Text('Play'),
+                  ),
+                  SizedBox(width: 10.0),
+                  ElevatedButton(
+                    onPressed: stop,
+                    child: Text('Stop'),
+                  ),
+                ],
               ),
               SizedBox(height: 20.0),
               Text(
