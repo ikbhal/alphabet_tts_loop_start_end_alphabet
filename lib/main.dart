@@ -60,10 +60,10 @@ class _AlphabetPlayerState extends State<AlphabetPlayer> {
     // Speak the current alphabet
     await speak(alphabet);
 
-    // Clear the current alphabet
-    setState(() {
-      currentAlphabet = '';
-    });
+    // // Clear the current alphabet
+    // setState(() {
+    //   currentAlphabet = '';
+    // });
     return true;
   }
 
@@ -91,9 +91,9 @@ class _AlphabetPlayerState extends State<AlphabetPlayer> {
             random.nextInt(256),
           );
 
-          setState(() {
-            this.currentAlphabet = currentAlphabet;
-          });
+          // setState(() {
+          //   this.currentAlphabet = currentAlphabet;
+          // });
           await playAlphabet(currentAlphabet);
 
           await Future.delayed(Duration(milliseconds: 2000)); // Delay for 1 second
