@@ -160,7 +160,9 @@ class _AlphabetPlayerState extends State<AlphabetPlayer> {
               SizedBox(height: 20.0),
               Text(
                 currentAlphabet,
-                style: TextStyle(fontSize: 64.0, fontWeight: FontWeight.bold, color: Colors.primaries[Random().nextInt(Colors.primaries.length)]),
+                style: TextStyle(fontSize: 180,
+                    fontWeight: FontWeight.bold,
+                    color: Colors.primaries[Random().nextInt(Colors.primaries.length)]),
               ),
             ],
           ),
