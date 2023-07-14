@@ -2,6 +2,10 @@ import 'package:flutter/material.dart';
 import 'package:flutter_tts/flutter_tts.dart';
 import 'dart:math';
 
+/**
+ * moving speak, stop in on row, as first child of column
+ */
+
 void main() {
   runApp(MyApp());
 }
