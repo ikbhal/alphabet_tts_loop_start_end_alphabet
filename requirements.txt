@@ -1,0 +1,22 @@
+nubmer 1 to 50
+---
+hindi alphabets
+---
+kannada alphabets
+
+---
+
+screen home screen
+
+4 box
+ 1) English
+   a to z
+ 2) Number
+    1 to 50
+ 3) Hindi
+ 4) kannada
+
+---
+other options
+drawer added to every screen
+which will list all screen

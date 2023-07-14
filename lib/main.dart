@@ -2,10 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_tts/flutter_tts.dart';
 import 'dart:math';
 
-/**
- * moving speak, stop in on row, as first child of column
- */
-
 void main() {
   runApp(MyApp());
 }
@@ -25,12 +21,14 @@ class AlphabetPlayer extends StatefulWidget {
 }
 
 class _AlphabetPlayerState extends State<AlphabetPlayer> {
-  final TextEditingController startAlphabetController = TextEditingController();
-  final TextEditingController endAlphabetController = TextEditingController();
   final TextEditingController repeatCountController = TextEditingController(text: '1');
   FlutterTts flutterTts = FlutterTts();
   String currentAlphabet = '';
   bool isPlaying = false;
+  String startAlphabet = 'A';
+  String endAlphabet = 'Z';
+
+  List<String> alphabets = List.generate(26, (index) => String.fromCharCode(index + 65));
 
   @override
   void initState() {
@@ -64,16 +62,10 @@ class _AlphabetPlayerState extends State<AlphabetPlayer> {
     // Speak the current alphabet
     await speak(alphabet);
 
-    // // Clear the current alphabet
-    // setState(() {
-    //   currentAlphabet = '';
-    // });
     return true;
   }
 
   void playLessonString() async {
-    final String startAlphabet = startAlphabetController.text.toUpperCase();
-    final String endAlphabet = endAlphabetController.text.toUpperCase();
     final int repeatCount = int.parse(repeatCountController.text);
 
     if (startAlphabet.isNotEmpty && endAlphabet.isNotEmpty && repeatCount > 0) {
@@ -84,17 +76,10 @@ class _AlphabetPlayerState extends State<AlphabetPlayer> {
       final random = Random();
 
       for (int i = 0; i < repeatCount && isPlaying ; i++) {
-
-
-        for (int j = startAlphabet.codeUnitAt(0) ; isPlaying && j <= endAlphabet.codeUnitAt(0); j++) {
+        for (int j = startAlphabet.codeUnitAt(0); isPlaying && j <= endAlphabet.codeUnitAt(0); j++) {
           final currentAlphabet = String.fromCharCode(j);
-
-          // setState(() {
-          //   this.currentAlphabet = currentAlphabet;
-          // });
           await playAlphabet(currentAlphabet);
-
-          await Future.delayed(Duration(milliseconds: 2000)); // Delay for 1 second
+          await Future.delayed(Duration(milliseconds: 2000)); // Delay for 2 seconds
         }
       }
 
@@ -122,17 +107,37 @@ class _AlphabetPlayerState extends State<AlphabetPlayer> {
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
-              TextField(
-                controller: startAlphabetController,
-                maxLength: 1,
+              DropdownButtonFormField<String>(
+                value: startAlphabet,
+                onChanged: (newValue) {
+                  setState(() {
+                    startAlphabet = newValue!;
+                  });
+                },
+                items: alphabets.map((alphabet) {
+                  return DropdownMenuItem(
+                    value: alphabet,
+                    child: Text(alphabet),
+                  );
+                }).toList(),
                 decoration: InputDecoration(
                   labelText: 'Start Alphabet',
                 ),
               ),
               SizedBox(height: 10.0),
-              TextField(
-                controller: endAlphabetController,
-                maxLength: 1,
+              DropdownButtonFormField<String>(
+                value: endAlphabet,
+                onChanged: (newValue) {
+                  setState(() {
+                    endAlphabet = newValue!;
+                  });
+                },
+                items: alphabets.map((alphabet) {
+                  return DropdownMenuItem(
+                    value: alphabet,
+                    child: Text(alphabet),
+                  );
+                }).toList(),
                 decoration: InputDecoration(
                   labelText: 'End Alphabet',
                 ),
@@ -158,9 +163,11 @@ class _AlphabetPlayerState extends State<AlphabetPlayer> {
               SizedBox(height: 20.0),
               Text(
                 currentAlphabet,
-                style: TextStyle(fontSize: 180,
-                    fontWeight: FontWeight.bold,
-                    color: Colors.primaries[Random().nextInt(Colors.primaries.length)]),
+                style: TextStyle(
+                  fontSize: 180,
+                  fontWeight: FontWeight.bold,
+                  color: Colors.primaries[Random().nextInt(Colors.primaries.length)],
+                ),
               ),
             ],
           ),
