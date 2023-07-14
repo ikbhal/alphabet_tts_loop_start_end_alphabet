@@ -2,10 +2,14 @@
           package="com.rontohub.alphabet"
     >
     <application
-        android:label="alphabet_text_to_speech"
+        android:label="Alphabet Player"
         android:name="${applicationName}"
-        android:label="Alphabet Lesson Player"
         android:icon="@mipmap/ic_launcher">
+
+        <meta-data
+                android:name="io.flutter.embedding.android.DrawableResourceHandler"
+                android:resource="@drawable/app_icon" />
+
         <activity
             android:name=".MainActivity"
             android:exported="true"

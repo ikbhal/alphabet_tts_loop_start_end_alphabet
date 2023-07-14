@@ -90,12 +90,12 @@ BEGIN
         BLOCK "040904e4"
         BEGIN
             VALUE "CompanyName", "com.example" "\0"
-            VALUE "FileDescription", "alphabet_text_to_speech" "\0"
+            VALUE "FileDescription", "Alphabet Player" "\0"
             VALUE "FileVersion", VERSION_AS_STRING "\0"
-            VALUE "InternalName", "alphabet_text_to_speech" "\0"
+            VALUE "InternalName", "Alphabet Player" "\0"
             VALUE "LegalCopyright", "Copyright (C) 2023 com.example. All rights reserved." "\0"
             VALUE "OriginalFilename", "alphabet_text_to_speech.exe" "\0"
-            VALUE "ProductName", "alphabet_text_to_speech" "\0"
+            VALUE "ProductName", "Alphabet Player" "\0"
             VALUE "ProductVersion", VERSION_AS_STRING "\0"
         END
     END
