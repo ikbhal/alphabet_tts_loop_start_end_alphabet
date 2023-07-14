@@ -31,6 +31,8 @@ class _AlphabetPlayerState extends State<AlphabetPlayer> {
   void initState() {
     super.initState();
     // flutterTts = FlutterTts();
+    flutterTts.setLanguage('en');
+    flutterTts.setSpeechRate(0.4);
   }
 
   Future<void> speak(String text) async {
