@@ -84,12 +84,6 @@ class _AlphabetPlayerState extends State<AlphabetPlayer> {
 
         for (int j = startAlphabet.codeUnitAt(0) ; isPlaying && j <= endAlphabet.codeUnitAt(0); j++) {
           final currentAlphabet = String.fromCharCode(j);
-          final color = Color.fromARGB(
-            255,
-            random.nextInt(256),
-            random.nextInt(256),
-            random.nextInt(256),
-          );
 
           // setState(() {
           //   this.currentAlphabet = currentAlphabet;
