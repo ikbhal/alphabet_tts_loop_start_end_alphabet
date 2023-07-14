@@ -1,5 +1,3 @@
-import 'dart:math';
-
 import 'package:flutter/material.dart';
 import 'package:flutter_tts/flutter_tts.dart';
 
@@ -11,127 +9,135 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      title: 'Flutter Demo',
-      theme: ThemeData(
-        primarySwatch: Colors.blue,
-      ),
-      debugShowCheckedModeBanner: false,
-      home: Home(),
+      home: AlphabetPlayer(),
     );
   }
 }
 
-class Home extends StatelessWidget {
-  final FlutterTts tts = FlutterTts();
-  final TextEditingController controller =
-  TextEditingController(text: 'Hello world');
+class AlphabetPlayer extends StatefulWidget {
+  @override
+  _AlphabetPlayerState createState() => _AlphabetPlayerState();
+}
 
-  final TextEditingController repeatedController = TextEditingController(text: '10');
+class _AlphabetPlayerState extends State<AlphabetPlayer> {
+  final TextEditingController startAlphabetController = TextEditingController();
+  final TextEditingController endAlphabetController = TextEditingController();
+  final TextEditingController repeatCountController = TextEditingController(text: '1');
+  FlutterTts flutterTts;
+  String lessonString = '';
+  bool isPlaying = false;
 
-  Home() {
-    tts.setLanguage('en');
-    tts.setSpeechRate(0.4);
+  @override
+  void initState() {
+    super.initState();
+    flutterTts = FlutterTts();
   }
 
-  String fillStringWithAlphabets(String startAlphabet, String endAlphabet) {
-    // Convert start and end alphabets to uppercase
-    startAlphabet = startAlphabet.toUpperCase();
-    endAlphabet = endAlphabet.toUpperCase();
+  Future<void> speak(String text) async {
+    await flutterTts.setLanguage('en-US');
+    await flutterTts.setPitch(1.0);
+    await flutterTts.speak(text);
+  }
 
-    // Get the ASCII code of the start and end alphabets
-    int startCode = startAlphabet.codeUnitAt(0);
-    int endCode = endAlphabet.codeUnitAt(0);
-
-    // Create an empty string
-    String filledString = '';
-
-    // Iterate through the ASCII codes of the alphabets
-    for (int i = startCode; i <= endCode; i++) {
-      // Convert the ASCII code back to an alphabet character
-      String alphabet = String.fromCharCode(i);
-
-      // Add the alphabet character to the filled string
-      filledString += alphabet;
+  void stop() async {
+    if (isPlaying) {
+      await flutterTts.stop();
+      setState(() {
+        isPlaying = false;
+      });
     }
-
-    return filledString;
   }
 
+  void playLessonString() {
+    final String startAlphabet = startAlphabetController.text.toUpperCase();
+    final String endAlphabet = endAlphabetController.text.toUpperCase();
+    final int repeatCount = int.parse(repeatCountController.text);
 
-  String getRandomAlphabet() {
-    final random = Random();
-    final startCode = 'A'.codeUnitAt(0);
-    final endCode = 'Z'.codeUnitAt(0);
-    final randomCode = startCode + random.nextInt(endCode - startCode + 1);
-    return String.fromCharCode(randomCode);
+    if (startAlphabet.isNotEmpty && endAlphabet.isNotEmpty && repeatCount > 0) {
+      setState(() {
+        isPlaying = true;
+      });
+
+      String lesson = '';
+      for (int i = 0; i < repeatCount; i++) {
+        lesson += startAlphabet + ' ';
+        for (int j = startAlphabet.codeUnitAt(0) + 1; j <= endAlphabet.codeUnitAt(0); j++) {
+          lesson += String.fromCharCode(j) + ' ';
+        }
+      }
+
+      setState(() {
+        lessonString = lesson;
+      });
+
+      speak(lessonString).then((_) {
+        setState(() {
+          isPlaying = false;
+        });
+      });
+    }
   }
 
-  // String getRepeatedString(String originalString, int repeat=100) {
-  //   // String originalString = "Hello, world!";
-  //   String repeatedString = originalString * 100;
-  //   return repeatedString;
-  // }
-
-  String repeatString(String inputString, {int repeatCount = 20}) {
-    return inputString * repeatCount;
+  @override
+  void dispose() {
+    stop();
+    flutterTts = null;
+    super.dispose();
   }
-
-  void main() {
-    String startAlphabet = 'A';
-    String endAlphabet = 'F';
-
-    String filledString = fillStringWithAlphabets(startAlphabet, endAlphabet);
-    print(filledString); // Output: ABCDEF
-  }
-
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: Column(
-        mainAxisAlignment: MainAxisAlignment.center,
-        children: [
-          TextField(
-            controller: controller,
-            decoration: InputDecoration(
-              labelText: 'Text',
-            ),
+      appBar: AppBar(
+        title: Text('Alphabet Lesson Player'),
+      ),
+      body: Center(
+        child: Padding(
+          padding: EdgeInsets.all(16.0),
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              TextField(
+                controller: startAlphabetController,
+                maxLength: 1,
+                decoration: InputDecoration(
+                  labelText: 'Start Alphabet',
+                ),
+              ),
+              SizedBox(height: 10.0),
+              TextField(
+                controller: endAlphabetController,
+                maxLength: 1,
+                decoration: InputDecoration(
+                  labelText: 'End Alphabet',
+                ),
+              ),
+              SizedBox(height: 10.0),
+              TextField(
+                controller: repeatCountController,
+                keyboardType: TextInputType.number,
+                decoration: InputDecoration(
+                  labelText: 'Repeat Count',
+                ),
+              ),
+              SizedBox(height: 20.0),
+              ElevatedButton(
+                onPressed: isPlaying ? null : playLessonString,
+                child: Text('Speak'),
+              ),
+              SizedBox(height: 10.0),
+              ElevatedButton(
+                onPressed: stop,
+                child: Text('Stop'),
+              ),
+              SizedBox(height: 20.0),
+              Text(
+                lessonString,
+                style: TextStyle(fontSize: 16.0),
+              ),
+            ],
           ),
-          TextField(
-            controller: repeatedController,
-            keyboardType: TextInputType.number,
-            decoration: InputDecoration(
-              labelText: 'Repeat Count',
-            ),
-          ),
-          ElevatedButton(
-              onPressed: (){
-                // controller.text= "abcdefghijklmnopqrstuvwxyz";
-
-                String startAlphabet = "a";
-                String endAlphabet = "z";
-                endAlphabet = getRandomAlphabet();
-                String lessonText= fillStringWithAlphabets(startAlphabet, endAlphabet);
-                print("startAlphabet: $startAlphabet, endAlphabet: $endAlphabet , Lesson Text: $lessonText ");
-                String repeatCountString = repeatedController.text;
-                int repeatCount = int.parse(repeatCountString);
-                print('Repeat count: $repeatCount');
-                String repeatedText = repeatString(lessonText, repeatCount: repeatCount);
-                controller.text = repeatedText;
-              },
-              child: Text("Fill Lesson Text")),
-          ElevatedButton(
-              onPressed: () {
-                tts.speak(controller.text);
-              },
-              child: Text('Speak')),
-
-          ElevatedButton(
-              onPressed: () {
-                tts.stop();
-              },
-              child: Text('Stop'))
-        ],
+        ),
       ),
     );
   }
