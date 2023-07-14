@@ -79,10 +79,10 @@ class _AlphabetPlayerState extends State<AlphabetPlayer> {
 
       final random = Random();
 
-      for (int i = 0; i < repeatCount ; i++) {
+      for (int i = 0; i < repeatCount && isPlaying ; i++) {
 
 
-        for (int j = startAlphabet.codeUnitAt(0) + 1; j <= endAlphabet.codeUnitAt(0); j++) {
+        for (int j = startAlphabet.codeUnitAt(0) ; isPlaying && j <= endAlphabet.codeUnitAt(0); j++) {
           final currentAlphabet = String.fromCharCode(j);
           final color = Color.fromARGB(
             255,
@@ -96,7 +96,7 @@ class _AlphabetPlayerState extends State<AlphabetPlayer> {
           });
           await playAlphabet(currentAlphabet);
 
-          await Future.delayed(Duration(milliseconds: 1000)); // Delay for 1 second
+          await Future.delayed(Duration(milliseconds: 2000)); // Delay for 1 second
         }
       }
 
