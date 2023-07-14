@@ -51,7 +51,7 @@ class _AlphabetPlayerState extends State<AlphabetPlayer> {
     }
   }
 
-  void playAlphabet(String alphabet) async {
+  Future<bool> playAlphabet(String alphabet) async {
     // Set the current alphabet
     setState(() {
       currentAlphabet = alphabet;
@@ -64,6 +64,7 @@ class _AlphabetPlayerState extends State<AlphabetPlayer> {
     setState(() {
       currentAlphabet = '';
     });
+    return true;
   }
 
   void playLessonString() async {
@@ -78,8 +79,8 @@ class _AlphabetPlayerState extends State<AlphabetPlayer> {
 
       final random = Random();
 
-      for (int i = 0; i < repeatCount; i++) {
-        await playAlphabet(startAlphabet);
+      for (int i = 0; i < repeatCount ; i++) {
+
 
         for (int j = startAlphabet.codeUnitAt(0) + 1; j <= endAlphabet.codeUnitAt(0); j++) {
           final currentAlphabet = String.fromCharCode(j);
@@ -93,6 +94,7 @@ class _AlphabetPlayerState extends State<AlphabetPlayer> {
           setState(() {
             this.currentAlphabet = currentAlphabet;
           });
+          await playAlphabet(currentAlphabet);
 
           await Future.delayed(Duration(milliseconds: 1000)); // Delay for 1 second
         }
