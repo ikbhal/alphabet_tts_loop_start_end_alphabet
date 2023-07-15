@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_tts/flutter_tts.dart';
 import 'dart:math';
-
 import 'alphabets.dart';
+import 'hindi_help_screen.dart';
 
 class HindiPlayer extends StatefulWidget {
   @override
@@ -97,6 +97,17 @@ class _HindiPlayerState extends State<HindiPlayer> {
       child: Scaffold(
         appBar: AppBar(
           title: Text('Hindi Player'),
+          actions: [
+            IconButton(
+              icon: Icon(Icons.help),
+              onPressed: () {
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(builder: (context) => HindiHelpScreen()),
+                );
+              },
+            ),
+          ]
         ),
         body: Center(
           child: Padding(

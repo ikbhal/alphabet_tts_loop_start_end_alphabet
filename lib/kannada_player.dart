@@ -2,6 +2,8 @@ import 'package:alphabet_text_to_speech/alphabets.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_tts/flutter_tts.dart';
 import 'dart:math';
+import 'kannada_help_screen.dart';
+
 
 class KannadaPlayer extends StatefulWidget {
   @override
@@ -102,6 +104,17 @@ class _KannadaPlayerState extends State<KannadaPlayer> {
     return Scaffold(
       appBar: AppBar(
         title: Text('Kannada Player'),
+        actions: [
+          IconButton(
+            icon: Icon(Icons.help),
+            onPressed: () {
+              Navigator.push(
+                context,
+                MaterialPageRoute(builder: (context) => KannadaHelpScreen()),
+              );
+            },
+          ),
+        ],
       ),
       body: Center(
         child: Padding(

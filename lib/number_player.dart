@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_tts/flutter_tts.dart';
 import 'dart:math';
+import 'number_help_screen.dart';
 
 class NumberPlayer extends StatefulWidget {
   @override
@@ -98,6 +99,17 @@ class _NumberPlayerState extends State<NumberPlayer> {
     return Scaffold(
       appBar: AppBar(
         title: Text('Number Player'),
+        actions: [
+          IconButton(
+            icon: Icon(Icons.help),
+            onPressed: () {
+              Navigator.push(
+                context,
+                MaterialPageRoute(builder: (context) => NumberHelpScreen()),
+              );
+            },
+          ),
+        ],
       ),
       body: Center(
         child: Padding(
