@@ -122,9 +122,6 @@ class _EnglishPlayerState extends State<EnglishPlayer> {
                       ),
                     ),
                   ),
-                  // Expanded(
-                  //   child: SizedBox(height: 10.0, width:2.0),
-                  // ),
                   Expanded(
                     child: DropdownButtonFormField<String>(
                       value: selectedEndAlphabet,
@@ -160,29 +157,7 @@ class _EnglishPlayerState extends State<EnglishPlayer> {
                   ))
                 ],
               ),
-              // SizedBox(height: 10.0),
-              // TextField(
-              //   controller: repeatCountController,
-              //   keyboardType: TextInputType.number,
-              //   decoration: InputDecoration(
-              //     labelText: 'Repeat Count',
-              //   ),
-              // ),
-              // SizedBox(height: 20.0),
-              // Row(
-              //   mainAxisAlignment: MainAxisAlignment.center,
-              //   children: [
-              //     ElevatedButton(
-              //       onPressed: isPlaying ? stop : playLessonString,
-              //       child: isPlaying ? Text('Stop') :Text('Play'),
-              //     ),
-              //     // SizedBox(width: 10.0),
-              //     // ElevatedButton(
-              //     //   onPressed: stop,
-              //     //   child: Text('Stop'),
-              //     // ),
-              //   ],
-              // ),
+
               SizedBox(height: 20.0),
               Text(
                 currentAlphabet,
