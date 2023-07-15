@@ -10,7 +10,7 @@ class EnglishPlayer extends StatefulWidget {
 
 class _EnglishPlayerState extends State<EnglishPlayer> {
   final TextEditingController repeatCountController =
-  TextEditingController(text: '1');
+      TextEditingController(text: '1');
   FlutterTts flutterTts = FlutterTts();
   String currentAlphabet = '';
   bool isPlaying = false;
@@ -58,9 +58,9 @@ class _EnglishPlayerState extends State<EnglishPlayer> {
 
       for (int i = 0; i < repeatCount && isPlaying; i++) {
         final startIndex =
-        Alphabets.englishAlphabets.indexOf(selectedStartAlphabet);
+            Alphabets.englishAlphabets.indexOf(selectedStartAlphabet);
         final endIndex =
-        Alphabets.englishAlphabets.indexOf(selectedEndAlphabet);
+            Alphabets.englishAlphabets.indexOf(selectedEndAlphabet);
 
         for (int j = startIndex; mounted && j <= endIndex && isPlaying; j++) {
           final currentAlphabet = Alphabets.englishAlphabets[j];
@@ -94,85 +94,96 @@ class _EnglishPlayerState extends State<EnglishPlayer> {
       appBar: AppBar(
         title: Text('English Alphabet Player'),
       ),
-      body: Center(
-        child: Padding(
-          padding: EdgeInsets.all(16.0),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.stretch,
-            children: [
-              Row(
-                children: [
-                  Expanded(
-                    child: DropdownButtonFormField<String>(
-                      value: selectedStartAlphabet,
-                      onChanged: (newValue) {
-                        setState(() {
-                          selectedStartAlphabet = newValue!;
-                        });
-                      },
-                      items: Alphabets.englishAlphabets.map((alphabet) {
-                        return DropdownMenuItem(
-                          value: alphabet,
-                          child: Text(alphabet),
-                        );
-                      }).toList(),
-                      decoration: InputDecoration(
-                        labelText: 'Start Alphabet',
-                      ),
-                    ),
-                  ),
-                  Expanded(
-                    child: DropdownButtonFormField<String>(
-                      value: selectedEndAlphabet,
-                      onChanged: (newValue) {
-                        setState(() {
-                          selectedEndAlphabet = newValue!;
-                        });
-                      },
-                      items: Alphabets.englishAlphabets.map((alphabet) {
-                        return DropdownMenuItem(
-                          value: alphabet,
-                          child: Text(alphabet),
-                        );
-                      }).toList(),
-                      decoration: InputDecoration(
-                        labelText: 'End Alphabet',
-                      ),
-                    ),
-                  ),
-                  Expanded(
-                    child: TextField(
-                      controller: repeatCountController,
-                      keyboardType: TextInputType.number,
-                      decoration: InputDecoration(
-                        labelText: 'Repeat Count',
-                      ),
-                    ),
-                  ),
-                  Expanded(
+      body: Column(
+        crossAxisAlignment: CrossAxisAlignment.stretch,
+        children: [
+          Expanded(
+            child: GridView.count(
+              crossAxisCount: 5,
+              shrinkWrap: true,
+              children: Alphabets.englishAlphabets.map((alphabet) {
+                return Container(
+                    margin: EdgeInsets.all(8.0),
                     child: ElevatedButton(
-                      onPressed: isPlaying ? stop : playLessonString,
-                      child: isPlaying ? Text('Stop') : Text('Play'),
+                      onPressed: () => playAlphabet(alphabet),
+                      child: Text(alphabet),
+                    ));
+              }).toList(),
+            ),
+          ),
+          Padding(
+            padding: EdgeInsets.all(16.0),
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                Expanded(
+                  child: DropdownButtonFormField<String>(
+                    value: selectedStartAlphabet,
+                    onChanged: (newValue) {
+                      setState(() {
+                        selectedStartAlphabet = newValue!;
+                      });
+                    },
+                    items: Alphabets.englishAlphabets.map((alphabet) {
+                      return DropdownMenuItem(
+                        value: alphabet,
+                        child: Text(alphabet),
+                      );
+                    }).toList(),
+                    decoration: InputDecoration(
+                      labelText: 'Start Alphabet',
                     ),
-                  ),
-                ],
-              ),
-              SizedBox(height: 20.0),
-              Container(
-                height: 200.0,
-                child: Text(
-                  currentAlphabet,
-                  style: TextStyle(
-                    fontSize: 180,
-                    fontWeight: FontWeight.bold,
-                    color: Colors
-                        .primaries[Random().nextInt(Colors.primaries.length)],
                   ),
                 ),
-              ),
-            ],
+                Expanded(
+                  child: DropdownButtonFormField<String>(
+                    value: selectedEndAlphabet,
+                    onChanged: (newValue) {
+                      setState(() {
+                        selectedEndAlphabet = newValue!;
+                      });
+                    },
+                    items: Alphabets.englishAlphabets.map((alphabet) {
+                      return DropdownMenuItem(
+                        value: alphabet,
+                        child: Text(alphabet),
+                      );
+                    }).toList(),
+                    decoration: InputDecoration(
+                      labelText: 'End Alphabet',
+                    ),
+                  ),
+                ),
+                Expanded(
+                  child: TextField(
+                    controller: repeatCountController,
+                    keyboardType: TextInputType.number,
+                    decoration: InputDecoration(
+                      labelText: 'Repeat Count',
+                    ),
+                  ),
+                ),
+                ElevatedButton(
+                  onPressed: isPlaying ? stop : playLessonString,
+                  child: isPlaying ? Text('Stop') : Text('Play'),
+                ),
+              ],
+            ),
           ),
-        ),
+          SizedBox(height: 20.0),
+          Container(
+            height: 200.0,
+            child: Text(
+              currentAlphabet,
+              style: TextStyle(
+                fontSize: 180,
+                fontWeight: FontWeight.bold,
+                color:
+                    Colors.primaries[Random().nextInt(Colors.primaries.length)],
+              ),
+            ),
+          ),
+        ],
       ),
     );
   }
