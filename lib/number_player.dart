@@ -68,21 +68,27 @@ class _NumberPlayerState extends State<NumberPlayer> {
       // final random = Random();
 
       for (int i = 0; i < repeatCount && isPlaying; i++) {
-        for (int j = startNumber; isPlaying && j <= endNumber; j++) {
+        for (int j = startNumber; mounted && isPlaying && j <= endNumber; j++) {
           await playNumber(j);
           await Future.delayed(Duration(milliseconds: 2000)); // Delay for 2 seconds
         }
       }
 
-      setState(() {
-        isPlaying = false;
-      });
+      if(mounted) {
+        setState(() {
+          isPlaying = false;
+        });
+      }
     }
   }
 
   @override
+  void deactivate() async {
+    await flutterTts.stop();
+  }
+
+  @override
   void dispose() {
-    stop();
     super.dispose();
   }
 

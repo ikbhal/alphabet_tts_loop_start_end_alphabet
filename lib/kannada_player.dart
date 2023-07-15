@@ -36,11 +36,11 @@ class _KannadaPlayerState extends State<KannadaPlayer> {
   }
 
   void stop() async {
-    if (mounted && isPlaying) {
-      await flutterTts.stop();
+    if (isPlaying) {
       setState(() {
         isPlaying = false;
       });
+      await flutterTts.stop();
     }
   }
 
@@ -70,7 +70,7 @@ class _KannadaPlayerState extends State<KannadaPlayer> {
         final startIndex = kannadaAlphabets.indexOf(startAlphabet);
         final endIndex = kannadaAlphabets.indexOf(endAlphabet);
 
-        for (int j = startIndex; isPlaying && j <= endIndex; j++) {
+        for (int j = startIndex; mounted && isPlaying && j <= endIndex; j++) {
           final currentAlphabet = kannadaAlphabets[j];
           await playAlphabet(currentAlphabet);
           await Future.delayed(
@@ -78,15 +78,22 @@ class _KannadaPlayerState extends State<KannadaPlayer> {
         }
       }
 
-      setState(() {
-        isPlaying = false;
-      });
+      if(mounted) {
+        setState(() {
+          isPlaying = false;
+        });
+      }
     }
   }
 
   @override
+  void deactivate() async {
+    // stop();
+    await flutterTts.stop();
+  }
+
+  @override
   void dispose() {
-    stop();
     super.dispose();
   }
 

@@ -19,7 +19,7 @@ class HomeScreen extends StatelessWidget {
               Card(
                 child: ListTile(
                   onTap: () {
-                    Navigator.pushNamed(context, '/englishAlphabetPlayer');
+                    Navigator.pushNamed(context, '/englishPlayer');
                   },
                   title: Text('English'),
                 ),

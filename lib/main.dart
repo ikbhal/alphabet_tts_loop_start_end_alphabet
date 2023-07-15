@@ -16,7 +16,7 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
       home: HomeScreen(),
       routes: {
-        '/englishAlphabetPlayer': (context) => EnglishAlphabetPlayer(),
+        '/englishPlayer': (context) => EnglishPlayer(),
         '/numberPlayer': (context) => NumberPlayer(),
         '/hindiPlayer': (context) => HindiPlayer(),
         '/kannadaPlayer': (context) => KannadaPlayer(),

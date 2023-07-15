@@ -26,8 +26,12 @@ class _HindiPlayerState extends State<HindiPlayer> {
   }
 
   @override
+  void deactivate()  async{
+    await flutterTts.stop();
+  }
+
+  @override
   void dispose() {
-    stop();
     super.dispose();
   }
 
@@ -67,7 +71,7 @@ class _HindiPlayerState extends State<HindiPlayer> {
         final startIndex = Alphabets.hindiAlphabets.indexOf(selectedStartAlphabet);
         final endIndex = Alphabets.hindiAlphabets.indexOf(selectedEndAlphabet);
 
-        for (int j = startIndex; isPlaying && j <= endIndex; j++) {
+        for (int j = startIndex; mounted && isPlaying && j <= endIndex; j++) {
           final currentAlphabet = Alphabets.hindiAlphabets[j];
           await playAlphabet(currentAlphabet);
           await Future.delayed(
@@ -75,9 +79,11 @@ class _HindiPlayerState extends State<HindiPlayer> {
         }
       }
 
-      setState(() {
-        isPlaying = false;
-      });
+      if(mounted) {
+        setState(() {
+          isPlaying = false;
+        });
+      }
     }
   }
 
