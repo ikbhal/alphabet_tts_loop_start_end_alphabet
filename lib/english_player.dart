@@ -3,6 +3,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_tts/flutter_tts.dart';
 import 'dart:math';
 
+import 'english_help_screen.dart';
+
 class EnglishPlayer extends StatefulWidget {
   @override
   _EnglishPlayerState createState() => _EnglishPlayerState();
@@ -10,7 +12,7 @@ class EnglishPlayer extends StatefulWidget {
 
 class _EnglishPlayerState extends State<EnglishPlayer> {
   final TextEditingController repeatCountController =
-      TextEditingController(text: '1');
+  TextEditingController(text: '1');
   FlutterTts flutterTts = FlutterTts();
   String currentAlphabet = '';
   bool isPlaying = false;
@@ -58,9 +60,9 @@ class _EnglishPlayerState extends State<EnglishPlayer> {
 
       for (int i = 0; i < repeatCount && isPlaying; i++) {
         final startIndex =
-            Alphabets.englishAlphabets.indexOf(selectedStartAlphabet);
+        Alphabets.englishAlphabets.indexOf(selectedStartAlphabet);
         final endIndex =
-            Alphabets.englishAlphabets.indexOf(selectedEndAlphabet);
+        Alphabets.englishAlphabets.indexOf(selectedEndAlphabet);
 
         for (int j = startIndex; mounted && j <= endIndex && isPlaying; j++) {
           final currentAlphabet = Alphabets.englishAlphabets[j];
@@ -88,29 +90,28 @@ class _EnglishPlayerState extends State<EnglishPlayer> {
     super.dispose();
   }
 
+  void openHelpScreen(BuildContext context) {
+    Navigator.push(
+      context,
+      MaterialPageRoute(builder: (context) => EnglishHelpScreen()),
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
         title: Text('English Alphabet Player'),
+        actions: [
+          IconButton(
+            icon: Icon(Icons.help),
+            onPressed: () => openHelpScreen(context),
+          ),
+        ],
       ),
       body: Column(
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
-          Expanded(
-            child: GridView.count(
-              crossAxisCount: 5,
-              shrinkWrap: true,
-              children: Alphabets.englishAlphabets.map((alphabet) {
-                return Container(
-                    margin: EdgeInsets.all(8.0),
-                    child: ElevatedButton(
-                      onPressed: () => playAlphabet(alphabet),
-                      child: Text(alphabet),
-                    ));
-              }).toList(),
-            ),
-          ),
           Padding(
             padding: EdgeInsets.all(16.0),
             child: Row(
@@ -179,7 +180,7 @@ class _EnglishPlayerState extends State<EnglishPlayer> {
                 fontSize: 180,
                 fontWeight: FontWeight.bold,
                 color:
-                    Colors.primaries[Random().nextInt(Colors.primaries.length)],
+                Colors.primaries[Random().nextInt(Colors.primaries.length)],
               ),
             ),
           ),
