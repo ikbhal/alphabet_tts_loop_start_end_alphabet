@@ -3,8 +3,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_tts/flutter_tts.dart';
 import 'dart:math';
 
-import 'english_help_screen.dart';
-
 class EnglishPlayer extends StatefulWidget {
   @override
   _EnglishPlayerState createState() => _EnglishPlayerState();
@@ -90,13 +88,6 @@ class _EnglishPlayerState extends State<EnglishPlayer> {
     super.dispose();
   }
 
-  void openHelpScreen(BuildContext context) {
-    Navigator.push(
-      context,
-      MaterialPageRoute(builder: (context) => EnglishHelpScreen()),
-    );
-  }
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -105,7 +96,9 @@ class _EnglishPlayerState extends State<EnglishPlayer> {
         actions: [
           IconButton(
             icon: Icon(Icons.help),
-            onPressed: () => openHelpScreen(context),
+            onPressed: () {
+              // TODO: Navigate to English Help Screen
+            },
           ),
         ],
       ),
@@ -114,54 +107,47 @@ class _EnglishPlayerState extends State<EnglishPlayer> {
         children: [
           Padding(
             padding: EdgeInsets.all(16.0),
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.center,
+            child: Column(
               children: [
-                Expanded(
-                  child: DropdownButtonFormField<String>(
-                    value: selectedStartAlphabet,
-                    onChanged: (newValue) {
-                      setState(() {
-                        selectedStartAlphabet = newValue!;
-                      });
-                    },
-                    items: Alphabets.englishAlphabets.map((alphabet) {
-                      return DropdownMenuItem(
-                        value: alphabet,
-                        child: Text(alphabet),
-                      );
-                    }).toList(),
-                    decoration: InputDecoration(
-                      labelText: 'Start Alphabet',
-                    ),
+                DropdownButtonFormField<String>(
+                  value: selectedStartAlphabet,
+                  onChanged: (newValue) {
+                    setState(() {
+                      selectedStartAlphabet = newValue!;
+                    });
+                  },
+                  items: Alphabets.englishAlphabets.map((alphabet) {
+                    return DropdownMenuItem(
+                      value: alphabet,
+                      child: Text(alphabet),
+                    );
+                  }).toList(),
+                  decoration: InputDecoration(
+                    labelText: 'Start Alphabet',
                   ),
                 ),
-                Expanded(
-                  child: DropdownButtonFormField<String>(
-                    value: selectedEndAlphabet,
-                    onChanged: (newValue) {
-                      setState(() {
-                        selectedEndAlphabet = newValue!;
-                      });
-                    },
-                    items: Alphabets.englishAlphabets.map((alphabet) {
-                      return DropdownMenuItem(
-                        value: alphabet,
-                        child: Text(alphabet),
-                      );
-                    }).toList(),
-                    decoration: InputDecoration(
-                      labelText: 'End Alphabet',
-                    ),
+                DropdownButtonFormField<String>(
+                  value: selectedEndAlphabet,
+                  onChanged: (newValue) {
+                    setState(() {
+                      selectedEndAlphabet = newValue!;
+                    });
+                  },
+                  items: Alphabets.englishAlphabets.map((alphabet) {
+                    return DropdownMenuItem(
+                      value: alphabet,
+                      child: Text(alphabet),
+                    );
+                  }).toList(),
+                  decoration: InputDecoration(
+                    labelText: 'End Alphabet',
                   ),
                 ),
-                Expanded(
-                  child: TextField(
-                    controller: repeatCountController,
-                    keyboardType: TextInputType.number,
-                    decoration: InputDecoration(
-                      labelText: 'Repeat Count',
-                    ),
+                TextField(
+                  controller: repeatCountController,
+                  keyboardType: TextInputType.number,
+                  decoration: InputDecoration(
+                    labelText: 'Repeat Count',
                   ),
                 ),
                 ElevatedButton(
@@ -172,15 +158,19 @@ class _EnglishPlayerState extends State<EnglishPlayer> {
             ),
           ),
           SizedBox(height: 20.0),
-          Container(
-            height: 200.0,
-            child: Text(
-              currentAlphabet,
-              style: TextStyle(
-                fontSize: 180,
-                fontWeight: FontWeight.bold,
-                color:
-                Colors.primaries[Random().nextInt(Colors.primaries.length)],
+          Expanded(
+            child: Align(
+              alignment: Alignment.center,
+              child: Container(
+                height: 200.0,
+                child: Text(
+                  currentAlphabet,
+                  style: TextStyle(
+                    fontSize: 180,
+                    fontWeight: FontWeight.bold,
+                    color: Colors.primaries[Random().nextInt(Colors.primaries.length)],
+                  ),
+                ),
               ),
             ),
           ),
