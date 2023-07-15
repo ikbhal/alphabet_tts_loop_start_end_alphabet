@@ -10,7 +10,7 @@ class EnglishPlayer extends StatefulWidget {
 
 class _EnglishPlayerState extends State<EnglishPlayer> {
   final TextEditingController repeatCountController =
-      TextEditingController(text: '1');
+  TextEditingController(text: '1');
   FlutterTts flutterTts = FlutterTts();
   String currentAlphabet = '';
   bool isPlaying = false;
@@ -58,9 +58,9 @@ class _EnglishPlayerState extends State<EnglishPlayer> {
 
       for (int i = 0; i < repeatCount && isPlaying; i++) {
         final startIndex =
-            Alphabets.englishAlphabets.indexOf(selectedStartAlphabet);
+        Alphabets.englishAlphabets.indexOf(selectedStartAlphabet);
         final endIndex =
-            Alphabets.englishAlphabets.indexOf(selectedEndAlphabet);
+        Alphabets.englishAlphabets.indexOf(selectedEndAlphabet);
 
         for (int j = startIndex; mounted && j <= endIndex && isPlaying; j++) {
           final currentAlphabet = Alphabets.englishAlphabets[j];
@@ -98,10 +98,9 @@ class _EnglishPlayerState extends State<EnglishPlayer> {
         child: Padding(
           padding: EdgeInsets.all(16.0),
           child: Column(
-            mainAxisAlignment: MainAxisAlignment.center,
+            crossAxisAlignment: CrossAxisAlignment.stretch,
             children: [
               Row(
-                mainAxisAlignment: MainAxisAlignment.center,
                 children: [
                   Expanded(
                     child: DropdownButtonFormField<String>(
@@ -151,21 +150,24 @@ class _EnglishPlayerState extends State<EnglishPlayer> {
                     ),
                   ),
                   Expanded(
-                      child: ElevatedButton(
-                    onPressed: isPlaying ? stop : playLessonString,
-                    child: isPlaying ? Text('Stop') : Text('Play'),
-                  ))
+                    child: ElevatedButton(
+                      onPressed: isPlaying ? stop : playLessonString,
+                      child: isPlaying ? Text('Stop') : Text('Play'),
+                    ),
+                  ),
                 ],
               ),
-
               SizedBox(height: 20.0),
-              Text(
-                currentAlphabet,
-                style: TextStyle(
-                  fontSize: 180,
-                  fontWeight: FontWeight.bold,
-                  color: Colors
-                      .primaries[Random().nextInt(Colors.primaries.length)],
+              Container(
+                height: 200.0,
+                child: Text(
+                  currentAlphabet,
+                  style: TextStyle(
+                    fontSize: 180,
+                    fontWeight: FontWeight.bold,
+                    color: Colors
+                        .primaries[Random().nextInt(Colors.primaries.length)],
+                  ),
                 ),
               ),
             ],
