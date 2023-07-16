@@ -15,23 +15,33 @@ class HomeScreen extends StatelessWidget {
             children: [
               Expanded(
                 child: Card(
-                  child: ListTile(
-                    onTap: () {
-                      Navigator.pushNamed(context, '/englishPlayer');
-                    },
-                    title: Text('English'),
-                    leading: IconButton(
-                      icon: Icon(Icons.play_arrow),
-                      onPressed: () {
-                        Navigator.pushNamed(context, '/englishPlayer');
-                      },
-                    ),
-                    trailing: IconButton(
-                      icon: Icon(Icons.help),
-                      onPressed: () {
-                        Navigator.pushNamed(context, '/englishHelp');
-                      },
-                    ),
+                  child: Column(
+                    children: [
+                      ListTile(
+                        onTap: () {
+                          Navigator.pushNamed(context, '/englishPlayer');
+                        },
+                        title: Text('English'),
+                        leading: IconButton(
+                          icon: Icon(Icons.play_arrow),
+                          onPressed: () {
+                            Navigator.pushNamed(context, '/englishPlayer');
+                          },
+                        ),
+                        trailing: IconButton(
+                          icon: Icon(Icons.help),
+                          onPressed: () {
+                            Navigator.pushNamed(context, '/englishHelp');
+                          },
+                        ),
+                      ),
+                      ListTile(
+                        onTap: () {
+                          Navigator.pushNamed(context, '/daysOfWeek');
+                        },
+                        title: Text('Days of Week'),
+                      ),
+                    ],
                   ),
                 ),
               ),

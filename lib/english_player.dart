@@ -3,6 +3,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_tts/flutter_tts.dart';
 import 'dart:math';
 
+import 'english_help_screen.dart';
+
 class EnglishPlayer extends StatefulWidget {
   @override
   _EnglishPlayerState createState() => _EnglishPlayerState();
@@ -98,6 +100,10 @@ class _EnglishPlayerState extends State<EnglishPlayer> {
             icon: Icon(Icons.help),
             onPressed: () {
               // TODO: Navigate to English Help Screen
+              Navigator.push(
+                  context,
+                  MaterialPageRoute(builder: (context) => EnglishHelpScreen()),
+              );
             },
           ),
         ],
