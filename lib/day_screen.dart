@@ -1,4 +1,5 @@
 import 'dart:async';
+import 'dart:math';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_tts/flutter_tts.dart';
@@ -16,8 +17,9 @@ class _DayScreenState extends State<DayScreen> {
   FlutterTts flutterTts = FlutterTts();
   List<String> letters = [];
   int currentLetterIndex = 0;
-  String currentWord ='';
+  String currentWord = '';
   Timer? timer;
+  final random = Random();
 
   @override
   void initState() {
@@ -72,7 +74,12 @@ class _DayScreenState extends State<DayScreen> {
         child: Text(
           // letters.take(currentLetterIndex).join(),
           currentWord,
-          style: TextStyle(fontSize: 100),
+          style: TextStyle(
+            fontSize: currentWord.length == 1 ? 300 : 50,
+            color: Colors.primaries[random.nextInt(Colors.primaries.length)],
+            fontWeight:
+                currentWord.length > 1 ? FontWeight.bold : FontWeight.normal,
+          ),
         ),
       ),
     );
