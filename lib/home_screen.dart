@@ -13,51 +13,61 @@ class HomeScreen extends StatelessWidget {
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
-              Expanded(
-                child: Card(
-                  child: Column(
-                    children: [
-                      ListTile(
-                        onTap: () {
-                          Navigator.pushNamed(context, '/englishPlayer');
-                        },
-                        title: Text('English'),
-                        leading: IconButton(
-                          icon: Icon(Icons.play_arrow),
-                          onPressed: () {
-                            Navigator.pushNamed(context, '/englishPlayer');
-                          },
-                        ),
-                        trailing: IconButton(
-                          icon: Icon(Icons.help),
-                          onPressed: () {
-                            Navigator.pushNamed(context, '/englishHelp');
-                          },
+              // begin of english card
+              SingleChildScrollView(
+                child: Center(
+                  child: Padding(
+                    padding: EdgeInsets.all(16.0),
+                    child: Card(
+                      child: Padding(
+                        padding: EdgeInsets.all(16.0),
+                        child: Column(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: [
+                            ElevatedButton(
+                              onPressed: () {
+                                Navigator.pushNamed(context, '/englishPlayer');
+                              },
+                              child: Text('English Player'),
+                            ),
+                            SizedBox(height: 16.0),
+                            ElevatedButton(
+                              onPressed: () {
+                                Navigator.pushNamed(context, '/englishHelp');
+                              },
+                              child: Text('English Help'),
+                            ),
+                            SizedBox(height: 16.0),
+                            ElevatedButton(
+                              onPressed: () {
+                                Navigator.pushNamed(context, '/daysOfWeek');
+                              },
+                              child: Text('Days of Week'),
+                            ),
+                            SizedBox(height: 16.0),
+                            ElevatedButton(
+                              onPressed: () {
+                                Navigator.pushNamed(context, '/monthsOfYear');
+                              },
+                              child: Text('Months of Year'),
+                            ),
+                            SizedBox(height: 16.0),
+                            ElevatedButton(
+                              onPressed: () {
+                                Navigator.pushNamed(context, '/rhymes');
+                              },
+                              child: Text('Rhymes'),
+                            ),
+                          ],
                         ),
                       ),
-                      ListTile(
-                        onTap: () {
-                          Navigator.pushNamed(context, '/daysOfWeek');
-                        },
-                        title: Align(
-                          alignment: Alignment.topCenter,
-                          child:Text('Days of Week')
-                        ),
-                      ),
-                      ListTile(
-                        onTap: () {
-                          Navigator.pushNamed(context, '/monthsOfYear');
-                        },
-                        title: Align(
-                          alignment: Alignment.topCenter,
-                          child: Text('Months of Year'),
-                        ),
-                      ),
-
-                    ],
+                    ),
                   ),
                 ),
               ),
+              // )
+
+              // endof english
               SizedBox(height: 16.0),
               Expanded(
                 child: Card(

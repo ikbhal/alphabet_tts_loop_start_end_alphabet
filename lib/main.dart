@@ -12,6 +12,8 @@ import 'english_help_screen.dart';
 import 'number_help_screen.dart';
 import 'hindi_help_screen.dart';
 import 'kannada_help_screen.dart';
+import 'rhymes_screen.dart';
+
 
 void main() {
   runApp(MyApp());
@@ -32,6 +34,7 @@ class MyApp extends StatelessWidget {
         '/englishPlayer': (context) => EnglishPlayer(),
         '/monthsOfYear': (context) => MonthsOfYearScreen(),
         '/daysOfWeek': (context) => DaysOfWeekScreen(),
+        '/rhymes': (context) => RhymesScreen(),
         '/numberPlayer': (context) => NumberPlayer(),
         '/hindiPlayer': (context) => HindiPlayer(),
         '/kannadaPlayer': (context) => KannadaPlayer(),
