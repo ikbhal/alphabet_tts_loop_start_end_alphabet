@@ -44,6 +44,16 @@ class HomeScreen extends StatelessWidget {
                           child:Text('Days of Week')
                         ),
                       ),
+                      ListTile(
+                        onTap: () {
+                          Navigator.pushNamed(context, '/monthsOfYear');
+                        },
+                        title: Align(
+                          alignment: Alignment.topCenter,
+                          child: Text('Months of Year'),
+                        ),
+                      ),
+
                     ],
                   ),
                 ),

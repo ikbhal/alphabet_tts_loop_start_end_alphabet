@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'day_screen.dart';
 import 'home_screen.dart';
 import 'english_player.dart';
+import 'months_of_year_screen.dart';
 import 'number_player.dart';
 import 'hindi_player.dart';
 import 'kannada_player.dart';
@@ -29,6 +30,7 @@ class MyApp extends StatelessWidget {
       routes: {
         '/': (context) => HomeScreen(),
         '/englishPlayer': (context) => EnglishPlayer(),
+        '/monthsOfYear': (context) => MonthsOfYearScreen(),
         '/daysOfWeek': (context) => DaysOfWeekScreen(),
         '/numberPlayer': (context) => NumberPlayer(),
         '/hindiPlayer': (context) => HindiPlayer(),
