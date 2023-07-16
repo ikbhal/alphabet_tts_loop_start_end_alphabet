@@ -39,7 +39,10 @@ class HomeScreen extends StatelessWidget {
                         onTap: () {
                           Navigator.pushNamed(context, '/daysOfWeek');
                         },
-                        title: Text('Days of Week'),
+                        title: Align(
+                          alignment: Alignment.topCenter,
+                          child:Text('Days of Week')
+                        ),
                       ),
                     ],
                   ),
