@@ -20,8 +20,14 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      home: HomeScreen(),
+      title: "Alphabet Player",
+      theme: ThemeData(
+        primarySwatch: Colors.orange,
+      ),
+      // home: HomeScreen(),
+      initialRoute: '/',
       routes: {
+        '/': (context) => HomeScreen(),
         '/englishPlayer': (context) => EnglishPlayer(),
         '/daysOfWeek': (context) => DaysOfWeekScreen(),
         '/numberPlayer': (context) => NumberPlayer(),
