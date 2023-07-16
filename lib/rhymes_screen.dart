@@ -1,8 +1,15 @@
+import 'dart:math';
+
 import 'package:audioplayers/audioplayers.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_tts/flutter_tts.dart';
 
-class RhymesScreen extends StatelessWidget {
+class RhymesScreen extends StatefulWidget {
+  @override
+  _RhymesScreenState createState() => _RhymesScreenState();
+}
+
+class _RhymesScreenState extends State<RhymesScreen> {
   final AudioPlayer audioPlayer = AudioPlayer();
   final List<String> rhymes = [
     'Twinkle, Twinkle, Little Star',
@@ -19,6 +26,14 @@ class RhymesScreen extends StatelessWidget {
   ];
 
   final FlutterTts flutterTts = FlutterTts();
+  final Random random = Random();
+  bool isPlaying = false;
+
+  @override
+  void dispose() {
+    audioPlayer.stop();
+    super.dispose();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -30,12 +45,28 @@ class RhymesScreen extends StatelessWidget {
         itemCount: rhymes.length,
         itemBuilder: (context, index) {
           final rhyme = rhymes[index];
-          return ListTile(
-            title: Text(rhyme),
-            onTap: () {
-              final rhymeAsset = rhymeAssets[index];
-              playRhyme(rhymeAsset);
-            },
+          return Container(
+            // height: MediaQuery.of(context).size.height / rhymes.length,
+            child: ListTile(
+              title: Center(
+                child: Text(
+                  rhyme,
+                  style: TextStyle(
+                    fontSize: 20,
+                    fontWeight: FontWeight.bold,
+                    // color: Colors
+                    //     .primaries[random.nextInt(Colors.primaries.length)],
+                  ),
+                ),
+              ),
+              onTap: () {
+                final rhymeAsset = rhymeAssets[index];
+                if (isPlaying) {
+                  audioPlayer.stop();
+                }
+                playRhyme(rhymeAsset);
+              },
+            ),
           );
         },
       ),
@@ -43,6 +74,17 @@ class RhymesScreen extends StatelessWidget {
   }
 
   Future<void> playRhyme(String assetPath) async {
+    setState(() {
+      isPlaying = true;
+    });
     await audioPlayer.play(AssetSource(assetPath));
+    // audioPlayer.onPlayerComplete
+    audioPlayer.onPlayerStateChanged.listen((event) {
+      if (event == PlayerState.completed) {
+        setState(() {
+          isPlaying = false;
+        });
+      }
+    });
   }
 }
