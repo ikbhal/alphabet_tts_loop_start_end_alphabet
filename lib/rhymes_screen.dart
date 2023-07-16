@@ -12,10 +12,10 @@ class RhymesScreen extends StatelessWidget {
   ];
 
   final List<String> rhymeAssets = [
-    'assets/english/rhymes/twinkle_twinkel_star.mp4',
-    'assets/english/rhymes/row_row.mp4',
-    'assets/english/rhymes/Humpty_Dumpty.mp4',
-    'assets/english/rhymes/Baa,_Baa,_Black_Sheep.mp4'
+    'english/rhymes/twinkle_twinkel_star.mp4',
+    'english/rhymes/row_row.mp4',
+    'english/rhymes/Humpty_Dumpty.mp4',
+    'english/rhymes/Baa,_Baa,_Black_Sheep.mp4'
   ];
 
   final FlutterTts flutterTts = FlutterTts();
